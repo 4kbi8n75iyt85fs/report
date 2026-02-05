@@ -36,19 +36,29 @@ export function PartnershipTerms() {
                         <ul className="space-y-2 text-muted-foreground">
                             <li className="flex items-start gap-2">
                                 <span className="text-primary">•</span>
-                                Employee salaries (~৳9k/month — 3 people at ৳3k each)
+                                Area Manager base salary: ৳3k/month
                             </li>
                             <li className="flex items-start gap-2">
                                 <span className="text-primary">•</span>
-                                Server & ads (~৳6k/month)
+                                Call Rep (if we hire): ৳3k/month <span className="text-green-600">(or ৳0 if you do it)</span>
                             </li>
                             <li className="flex items-start gap-2">
                                 <span className="text-primary">•</span>
-                                Other operational costs (~৳1-2k/month)
+                                Server & ads: ~৳6k/month
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-primary">•</span>
+                                Other costs: ~৳1-2k/month
                             </li>
                         </ul>
-                        <p className="text-sm bg-muted p-3 border-l-4 border-primary">
-                            <strong>Estimated:</strong> ৳16-17k/month for 1-3 months
+                        <div className="p-3 bg-muted border-l-4 border-primary">
+                            <p className="text-sm">
+                                <strong>If you do calls:</strong> ~৳10-11k/month<br />
+                                <strong>If we hire call rep:</strong> ~৳13-14k/month
+                            </p>
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                            For 1-3 months until significantly profitable.
                         </p>
                     </div>
                 </div>
@@ -105,8 +115,8 @@ export function PartnershipTerms() {
                         <div className="p-4 bg-muted border-2 border-foreground">
                             <p className="font-bold mb-2">Example:</p>
                             <p className="text-sm">
-                                If costs are ৳20,000 and profit is ৳20,000 — you still fund.<br />
-                                If costs are ৳20,000 and profit is ৳50,000 — now the business funds itself.
+                                If costs are ৳15,000 and profit is ৳15,000 — you still fund.<br />
+                                If costs are ৳15,000 and profit is ৳40,000 — now the business funds itself.
                             </p>
                         </div>
                         <p className="text-sm text-muted-foreground">

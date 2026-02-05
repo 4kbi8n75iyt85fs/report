@@ -10,20 +10,20 @@ const teamRoles = [
     {
         icon: PhoneCall,
         title: "Call Center Rep",
-        salary: "৳3,000/month",
-        description: "Contacts WhatsApp leads, collects info, schedules home visits.",
+        salary: "৳3,000/month (OR you do it)",
+        description: "Contacts WhatsApp leads, collects basic info, schedules home visits. ~12 calls/day, ~1 hour of work. If you can handle this, we save ৳3,000/month.",
     },
     {
         icon: Users,
         title: "Teacher Relation Manager",
-        salary: "৳3,000/month",
-        description: "Recruits tutors, assigns students, grades papers, manages tutor quality.",
+        salary: "I handle this",
+        description: "I'll manage tutor recruitment, assignments, and paper grading. You help a bit when needed. No hire needed.",
     },
     {
         icon: MapPin,
         title: "Area Manager",
         salary: "৳300-500/student OR ৳3,000 base",
-        description: "Visits homes, creates routines, holds parent meetings, collects payments. If commissions don&apos;t exceed ৳3,000, we pay base salary instead.",
+        description: "Visits homes, creates routines, holds parent meetings, collects payments. If commissions don't exceed ৳3,000, we pay base salary instead.",
     },
 ];
 
@@ -36,6 +36,7 @@ const fixedCosts = [
 
 export function TeamAndCosts() {
     const [studentCount, setStudentCount] = useState(15);
+    const [friendDoesCalls, setFriendDoesCalls] = useState(false);
 
     const revenuePerStudent = 2000;
     const areaManagerPerStudent = 400; // avg of 300-500
@@ -45,16 +46,15 @@ export function TeamAndCosts() {
     const areaManagerCommission = studentCount * areaManagerPerStudent;
     const areaManagerCost = Math.max(areaManagerCommission, 3000);
 
-    // Fixed employee costs (excluding area manager)
-    const callCenterCost = 3000;
-    const teacherManagerCost = 3000;
+    // Call center cost depends on if friend does it
+    const callCenterCost = friendDoesCalls ? 0 : 3000;
 
     // Fixed infrastructure costs (in BDT)
     const serverCost = 600;
     const adsCost = 5400; // 30+15 = 45 USD = ~5400 BDT
     const otherCosts = 1500; // 1-2k average
 
-    const totalFixedCosts = callCenterCost + teacherManagerCost + serverCost + adsCost + otherCosts;
+    const totalFixedCosts = callCenterCost + serverCost + adsCost + otherCosts;
     const totalMonthlyCost = totalFixedCosts + areaManagerCost;
     const profit = totalRevenue - totalMonthlyCost;
 
@@ -68,7 +68,7 @@ export function TeamAndCosts() {
                     Who We Need & What It Costs
                 </h2>
                 <p className="text-lg md:text-xl text-muted-foreground max-w-3xl leading-relaxed">
-                    A lean team of 3 people runs the entire operation. Here&apos;s the breakdown.
+                    A lean operation. I handle the tech and teacher management. You handle execution.
                 </p>
             </div>
 
@@ -108,13 +108,13 @@ export function TeamAndCosts() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Call Center Rep</td>
-                                <td className="text-right font-mono">৳3,000</td>
+                            <tr className={friendDoesCalls ? "line-through opacity-50" : ""}>
+                                <td>Call Center Rep {friendDoesCalls && "(You do this)"}</td>
+                                <td className="text-right font-mono">{friendDoesCalls ? "৳0" : "৳3,000"}</td>
                             </tr>
-                            <tr>
-                                <td>Teacher Relation Manager</td>
-                                <td className="text-right font-mono">৳3,000</td>
+                            <tr className="line-through opacity-50">
+                                <td>Teacher Relation Manager (I handle this)</td>
+                                <td className="text-right font-mono">৳0</td>
                             </tr>
                             <tr>
                                 <td>Area Manager (base salary)</td>
@@ -128,7 +128,9 @@ export function TeamAndCosts() {
                             ))}
                             <tr className="bg-primary/5 font-bold">
                                 <td>Total Monthly Costs</td>
-                                <td className="text-right font-mono">~৳16,000-17,000</td>
+                                <td className="text-right font-mono">
+                                    {friendDoesCalls ? "~৳10,000-11,000" : "~৳13,000-14,000"}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -142,6 +144,24 @@ export function TeamAndCosts() {
                     Profit Calculator
                 </h3>
                 <div className="brutalist-card p-8">
+                    {/* Toggle for friend doing calls */}
+                    <div className="mb-8 p-4 bg-muted border-2 border-foreground">
+                        <label className="flex items-center gap-4 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                checked={friendDoesCalls}
+                                onChange={(e) => setFriendDoesCalls(e.target.checked)}
+                                className="w-6 h-6 accent-primary cursor-pointer"
+                            />
+                            <span className="font-bold">
+                                I can handle the calls myself (~1 hr/day)
+                            </span>
+                        </label>
+                        <p className="text-sm text-muted-foreground mt-2 ml-10">
+                            Toggle this to see how costs change if you do the ~12 calls/day
+                        </p>
+                    </div>
+
                     <div className="mb-8">
                         <label htmlFor="studentSlider" className="block text-lg font-bold mb-4">
                             Number of Students: <span className="text-primary text-2xl">{studentCount}</span>
@@ -178,7 +198,7 @@ export function TeamAndCosts() {
                         <MetricCard
                             value={`৳${totalMonthlyCost.toLocaleString()}`}
                             label="Total Costs"
-                            description="All salaries + infra"
+                            description={friendDoesCalls ? "You do calls" : "Hiring call rep"}
                         />
                         <MetricCard
                             value={`৳${profit.toLocaleString()}`}
@@ -190,7 +210,7 @@ export function TeamAndCosts() {
 
                     <div className="mt-6 text-center text-muted-foreground">
                         <p>
-                            <strong>Break-even point:</strong> ~9 students (covers ~৳17k costs)
+                            <strong>Break-even point:</strong> {friendDoesCalls ? "~6 students" : "~7 students"}
                         </p>
                     </div>
                 </div>
